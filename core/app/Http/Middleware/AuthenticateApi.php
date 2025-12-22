@@ -50,11 +50,12 @@ class AuthenticateApi
         // Get the user
         $user = $accessToken->tokenable;
 
-        if (!$user || $user->user_status != 1) {
+        // user_status: 0 = Normal (active), 1 = Disabled
+        if (!$user || $user->user_status == 1) {
             return response()->json([
                 'success' => false,
                 'status' => 401,
-                'message' => 'User account is inactive or not found.',
+                'message' => 'User account is disabled or not found.',
             ], 401);
         }
 

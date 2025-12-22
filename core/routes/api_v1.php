@@ -2,11 +2,13 @@
 
 /*
 |--------------------------------------------------------------------------
-| API V1 Routes
+| API V1 Routes - Mobile App
 |--------------------------------------------------------------------------
 |
 | Secure, well-structured API routes with proper authentication.
 | All routes are prefixed with /api/v1/
+|
+| Base URL: https://isp.mlbbshop.app/api/v1
 |
 */
 
@@ -20,14 +22,18 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->namespace('API\V1')->group(function () {
     
     // Authentication
-    Route::post('auth/register', 'AuthController@register');
-    Route::post('auth/login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
     
     // Public data
     Route::get('packages', 'PackageController@index');
-    Route::get('banners', 'BannerController@index');
+    Route::get('packages/{id}', 'PackageController@show');
+    Route::get('banners', 'SystemController@banners');
+    
+    // System
     Route::get('maintenance-status', 'SystemController@maintenanceStatus');
     Route::get('app-version', 'SystemController@appVersion');
+    Route::get('settings', 'SystemController@settings');
     
 });
 
@@ -38,60 +44,45 @@ Route::prefix('v1')->namespace('API\V1')->group(function () {
 */
 Route::prefix('v1')->namespace('API\V1')->middleware('auth.api')->group(function () {
     
-    // Auth management
-    Route::post('auth/logout', 'AuthController@logout');
-    Route::post('auth/logout-all', 'AuthController@logoutAll');
-    Route::post('auth/refresh-token', 'AuthController@refreshToken');
-    Route::post('auth/change-password', 'AuthController@changePassword');
+    // ==================== Auth Management ====================
+    Route::post('logout', 'AuthController@logout');
+    Route::post('logout-all', 'AuthController@logoutAll');
+    Route::post('refresh-token', 'AuthController@refreshToken');
+    Route::post('change-password', 'AuthController@changePassword');
     
-    // User profile
+    // ==================== User Profile ====================
     Route::get('profile', 'AuthController@profile');
     Route::put('profile', 'ProfileController@update');
     Route::post('profile/image', 'ProfileController@uploadImage');
     
-    // Bind users / devices
+    // ==================== Bind Users (Broadband Accounts) ====================
     Route::get('bind-users', 'BindUserController@index');
+    Route::get('bind-users/{id}', 'BindUserController@show');
     Route::post('bind-users', 'BindUserController@store');
     Route::delete('bind-users/{id}', 'BindUserController@destroy');
     
-    // Payments
+    // ==================== Packages ====================
+    Route::get('my-packages', 'PackageController@myPackages');
+    
+    // ==================== Payments ====================
     Route::get('payments', 'PaymentController@index');
+    Route::get('payments/methods', 'PaymentController@methods');
     Route::get('payments/{id}', 'PaymentController@show');
     Route::post('payments/initiate', 'PaymentController@initiate');
     Route::get('payments/{id}/status', 'PaymentController@status');
     
-    // Packages & Services
-    Route::get('my-packages', 'PackageController@myPackages');
-    Route::get('packages/{id}', 'PackageController@show');
-    
-    // Notifications
+    // ==================== Notifications ====================
     Route::get('notifications', 'NotificationController@index');
+    Route::get('notifications/unread-count', 'NotificationController@unreadCount');
+    Route::get('notifications/{id}', 'NotificationController@show');
     Route::put('notifications/{id}/read', 'NotificationController@markAsRead');
     Route::put('notifications/read-all', 'NotificationController@markAllAsRead');
     
-    // Support / Queries
-    Route::get('queries', 'QueryController@index');
-    Route::post('queries', 'QueryController@store');
-    Route::get('queries/{id}', 'QueryController@show');
-    
-    // Messages / Chat
-    Route::get('messages', 'MessageController@index');
-    Route::post('messages', 'MessageController@store');
-    
-    // Fault reports
+    // ==================== Fault Reports ====================
     Route::get('fault-reports', 'FaultReportController@index');
+    Route::get('fault-reports/{id}', 'FaultReportController@show');
     Route::post('fault-reports', 'FaultReportController@store');
+    Route::put('fault-reports/{id}', 'FaultReportController@update');
+    Route::delete('fault-reports/{id}', 'FaultReportController@destroy');
     
-});
-
-/*
-|--------------------------------------------------------------------------
-| Payment Callbacks (Special - No Auth but Verified by Gateway)
-|--------------------------------------------------------------------------
-*/
-Route::prefix('v1/callbacks')->namespace('API\V1')->group(function () {
-    Route::match(['GET', 'POST'], 'kbz', 'PaymentCallbackController@kbz');
-    Route::match(['GET', 'POST'], 'wave', 'PaymentCallbackController@wave');
-    Route::match(['GET', 'POST'], 'aya', 'PaymentCallbackController@aya');
-    Route::match(['GET', 'POST'], 'cb', 'PaymentCallbackController@cb');
 });

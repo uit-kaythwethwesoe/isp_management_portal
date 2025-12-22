@@ -327,7 +327,7 @@ Route::group(['prefix' => '{locale}/admin', 'where' => ['locale' => '[a-zA-Z]{2}
     //Prefenectial
     Route::get('/preferential-activities', 'Admin\SettingController@Preferential_activities')->name('admin.Preferential_activities');
     Route::post('/upload-preferential', 'Admin\SettingController@upload_Preferential')->name('admin.upload_Preferential');
-    Route::post('/edit-preferential', 'Admin\SettingController@edit_preferential')->name('admin.editpreferential');\
+    Route::post('/edit-preferential', 'Admin\SettingController@edit_preferential')->name('admin.editpreferential');
     Route::get('/delete-preferential/{id}', 'Admin\SettingController@delete_Preferential')->name('admin.deletepreferential');
 
     

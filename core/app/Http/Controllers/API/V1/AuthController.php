@@ -48,10 +48,9 @@ class AuthController extends Controller
 
             $user = User::create([
                 'phone' => $request->phone,
-                'uniq_id' => rand(100000, 999999),
                 'name' => $request->name,
                 'password' => Hash::make($request->password),
-                'user_status' => 1,
+                'user_status' => 0, // 0 = Normal (active)
             ]);
 
             // Generate API token
@@ -104,8 +103,9 @@ class AuthController extends Controller
             return $this->errorResponse('Invalid phone number or password.', 401);
         }
 
-        if ($user->user_status != 1) {
-            return $this->errorResponse('Your account is inactive. Please contact support.', 403);
+        // user_status: 0 = Normal (active), 1 = Disabled
+        if ($user->user_status == 1) {
+            return $this->errorResponse('Your account is disabled. Please contact support.', 403);
         }
 
         // Revoke old tokens (optional - for single device login)
@@ -266,13 +266,45 @@ class AuthController extends Controller
     {
         return [
             'id' => $user->id,
-            'uniq_id' => $user->uniq_id,
             'name' => $user->name,
             'phone' => $user->phone,
             'email' => $user->email,
-            'profile_image' => $user->profile_image,
+            'photo' => $user->photo,
             'user_status' => $user->user_status,
+            'bind_user_id' => $user->bind_user_id,
             'created_at' => $user->created_at ? $user->created_at->toISOString() : null,
         ];
+    }
+
+    /**
+     * Get all active packages.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function packages()
+    {
+        try {
+            $packages = \App\Package::where('status', 1)->get();
+            return $this->successResponse($packages, 'Packages retrieved successfully');
+        } catch (\Exception $e) {
+            Log::error('Packages fetch failed: ' . $e->getMessage());
+            return $this->serverErrorResponse('Failed to fetch packages.');
+        }
+    }
+
+    /**
+     * Get all active banners/sliders.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function banners()
+    {
+        try {
+            $banners = \App\Slider::where('status', 1)->get();
+            return $this->successResponse($banners, 'Banners retrieved successfully');
+        } catch (\Exception $e) {
+            Log::error('Banners fetch failed: ' . $e->getMessage());
+            return $this->serverErrorResponse('Failed to fetch banners.');
+        }
     }
 }
