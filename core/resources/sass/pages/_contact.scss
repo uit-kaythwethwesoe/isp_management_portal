@@ -1,0 +1,156 @@
+
+/*---------------------------
+** Contact Us  Area Start
+---------------------------*/
+
+.contact-us{
+  padding: 100px 0px 100px;
+  .header-area{
+    text-align: center;
+    margin-bottom: 28px;
+    .title{
+      font-size: 28px;
+      line-height: 38px;
+      font-weight: 700;
+    }
+  }
+
+  .left-area{
+    .contact-form{
+      padding: 30px 30px 30px;
+      box-shadow: $bs2;
+      border-radius: 10px;
+      background: #fff;
+      ul{
+        padding-left: 0px;
+        margin-bottom: 0px;
+        li{
+          list-style: none;
+          .input-field{
+            margin-bottom: 20px;
+            background: none;
+            border-radius: 3px;
+            padding: 0px 20px;
+            border: 0px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            &:focus{
+              border: 1px solid $base-color;
+            }
+            &.textarea{
+              margin-bottom: 15px;
+              padding-top: 15px;
+              border-radius: 3px;
+            }
+          }
+          
+        }
+      }
+      .submit-btn{
+        width: 180px;
+        height: 50px;
+        padding: 0px;
+        background: $base-color;
+        color: #fff;
+        font-size: 16px;
+        line-height: 50px;
+        text-align: center;
+        border: 0px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: $transition;
+        &:hover{
+          border: 1px solid $base-color;
+          background: #fff;
+          color: $base-color;
+        }
+      }
+    }
+  }
+  .right-area{
+    .contact-info{
+      margin-bottom: 30px;
+      transition: $transition;
+      display: flex;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: $bs2;
+      border-radius: 10px;
+      background: #fff;
+      padding: 23px 30px 28px;
+      .left{
+        position: relative;
+        align-self: center;
+        .icon{  
+          align-self: center;
+          width: 50px;
+          text-align: center;
+          margin-right: 20px;
+          transition: $transition;
+          z-index: 9;
+          text-align: center;
+          display: block;
+          font-size: 34px;
+          img{
+            display: inline-block;
+          }
+        }
+      }
+      
+      .content{
+        flex: 1;
+        .title{
+          font-size: 21px;
+          line-height: 31px;
+          font-weight: 600;
+          display: block;
+        }
+        a{
+          display: block;
+          margin-bottom: 0px;
+        }
+      }
+
+    }
+    .social-links{
+      padding-top: 20px;
+      .title{
+        font-size: 21px;
+        line-height: 31px;
+        font-weight: 600;
+        color: $heading-color;
+        margin-top: -5px;
+        margin-bottom: 18px;
+      }
+      ul{
+        padding-left: 0px;
+        margin-bottom: 0px;
+        li{
+          display: inline-block;
+          a{
+            font-size: 16px;
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0px 3px;
+            background: #fff;
+            color: $base-color;
+            box-shadow: $bs2;
+            border: 0px;
+            @include transition();       
+             &:hover{
+              background: $base-color;
+              color: #fff;
+              border: 0px!important;
+             }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+

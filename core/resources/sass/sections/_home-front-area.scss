@@ -1,0 +1,590 @@
+/*-------------------------------
+  Hero  Area CSS Start
+--------------------------------*/
+
+.hero-area {
+	.hero-area-slider{
+		.intro-carousel{
+			position: relative;
+			&.owl-carousel{
+				.owl-item{
+					&.active{
+						.slider-content{
+							&::after{
+								width: 100%;
+							}
+						}
+					   .layer-1,
+					   .layer-2,
+					   .layer-3{
+						transform: translateY(0);
+						opacity: 1;
+					   }
+					}
+				}
+				.owl-controls{
+					.owl-nav{
+						.owl-prev,
+						.owl-next
+						{
+							color: #fff;
+							font-size: 18px;
+							position: absolute;
+							top: 50%;
+							transform: translateY(-50%);
+							text-align: center;
+							width: 60px;
+							height: 45px;
+							line-height: 45px;
+							opacity: 1;
+							background: $base-color;
+							box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+							@include transition;
+							&:hover{
+								background: $base-color;
+								color: $white;
+							}
+						}
+						.owl-prev{
+							left: 0%;
+							border-radius: 0px 50px 50px 0px;
+						}
+						.owl-next{
+							right: 0%;
+							border-radius: 50px 0px 0px 50px;
+						}
+					}
+				}
+			}
+			.intro-content{
+				padding: 265px 0px 265px;
+				background-size: cover;
+				background-repeat: no-repeat;
+				position: relative;
+				display: flex;
+				align-self: center;
+				align-items: center;
+				&.slide-one{
+					text-align: left;
+				}
+				&.slide-two{
+					text-align: center;
+				}
+				&.slide-three{
+					text-align: right;
+				}
+				.slider-content{
+					position: relative;
+					width: 50%;
+					padding: 50px 50px 50px;
+					&::after{
+						position: absolute;
+						content: '';
+						top: 0px;
+						left: 0px;
+						width: 0%;
+						height: 100%;
+						background: rgba(0, 0, 0, 0.7);
+						border-radius: 10px;
+						transition: all 1s ease-in-out 0.4s;
+					}
+					.layer-1{
+						position: relative;
+						z-index: 1;
+						transform: translateY(100%);
+						opacity: 0;
+						transition: all 1s ease-in-out 0.7s;
+						.subtitle{
+							@include fz-24;
+							color: #fff;
+							font-weight: 600;
+						}
+						.title{
+							@include fz-30;
+							font-weight: 700;
+							color: #fff;
+						}
+					}
+					.layer-2{
+						position: relative;
+						z-index: 1;
+						transform: translateY(100%);
+						opacity: 0;
+						transition: all 1s ease-in-out .8s;
+						.text{
+							@include fz-16;
+							font-weight: 600;
+							display: inline-block;
+							color: #fff;
+						}
+					}
+					.layer-3{
+						position: relative;
+						z-index: 1;
+						transform: translateY(100%);
+						opacity: 0;
+						transition: all 1s ease-in-out .9s;
+						a{
+						margin-top: 15px;
+						text-align: center;
+						}
+					}
+				}
+			}
+		}
+		.owl-controls{
+			.owl-dots{
+				position: absolute;
+				bottom: 30px;
+				left: 50%;
+				transform: translateY(-50%);
+				.owl-dot{
+					display: inline-block;
+					width: 10px;
+					height: 10px;
+					background: #fff;
+					margin: 0px 3px;
+					border-radius: 10px;
+					box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+					transition: $transition;
+					&.active{
+						width: 24px;
+					}
+				}
+			}
+		}
+	}
+}
+
+/*-------------------------------
+  Hero  Area CSS End
+--------------------------------*/
+
+
+/*-------------------------------
+  About  Area CSS Start
+--------------------------------*/
+.about-section{
+	padding: 110px 0px 110px;
+		.section-heading{
+			text-align: left;
+		}
+		.list{
+			margin-top: 26px;
+			li{
+				p{
+					box-shadow: $bs1;
+					padding: 10px 30px 10px 55px;
+					border-radius: 15px 0px 15px 0px;
+					font-weight: 600;
+					transition: $transition;
+					cursor: pointer;
+					position: relative;
+					&:hover{
+						background: $base-color;
+						color: #fff;
+					}
+					&::before{
+						position: absolute;
+						content: '\f0a4';
+						font-family: 'Font Awesome 5 Free';
+						left: 30px;
+						font-weight: 400;
+					}
+				}
+			}
+		}
+}
+/*-------------------------------
+  About  Area CSS End
+--------------------------------*/
+
+/*-------------------------------
+  Pricing Plan  Area CSS Start
+--------------------------------*/
+
+.pricingPlan-section{
+	background-color: rgb(249, 245, 255);
+	padding: 110px 0px 90px;
+	position: relative;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	.overlay{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+		background: rgba(0, 0, 0, 0.7);
+	}
+	.section-heading{
+		margin-bottom: 26px;
+	}
+	.slider-item{
+		padding: 30px 15px 30px;
+	}
+	.single-price{
+		box-shadow: $bs1;
+		border-radius: 10px;
+		overflow: hidden;
+		background: #fff;
+		transition: $transition;
+		.name{
+			background: $base-color;
+			text-align: center;
+			padding: 14px 10px;
+			font-weight:  600;
+			font-size: 20px;
+			line-height: 30px;
+			color: #fff;
+		}
+		.mbps{
+			text-align: center;
+			padding: 10px 30px;
+			font-size: 40px;
+			line-height: 50px;
+			font-weight: 700;
+			span{
+				font-size: 16px;
+				line-height: 26px;
+				font-weight: 600;
+			}
+		}
+		.list{
+			padding: 10px 30px;
+			text-align: center;
+			li{
+				display: block;
+				border-top: 1px solid rgba(0, 0, 0, 0.1);
+				&:last-child{
+					border-bottom: 0px;
+				}
+				&:first-child{
+					border-top: 0px;
+				}
+				p{
+					margin-bottom: 0px;
+					line-height: 40px;
+					font-size: 16px;
+					display: block;
+					position: relative;
+					text-align: center;
+				}
+			}
+		}
+		.bottom-area{
+			padding-bottom: 30px;
+			text-align: center;
+			.price-area{
+				padding: 10px 30px;
+				.price-top-area{
+					p{
+						display: inline-block;
+						margin-bottom: 0px;
+						&.showprice{
+							font-size: 30px;
+							line-height: 40px;
+							font-weight: 700;
+						}
+						&.discounted{
+							font-size: 18px;
+							line-height: 28px;
+							font-weight: 600;
+							color: $body-color;
+						}
+					}
+				}
+			}
+		}
+		&:hover{
+			box-shadow: $bs2;
+			transform: translateY(-10px);
+		}
+	}
+	.owl-stage-outer{
+		position: relative;
+	}
+	.owl-controls {
+		display: block;
+		text-align: center;
+		z-index: 91;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 100%;
+	  }
+	  .owl-controls .owl-nav {
+		display: inline-block;
+		width: 100%;
+	  }
+	  .owl-controls .owl-nav div {
+		width: 35px;
+		height: 35px;
+		display: inline-block;
+		line-height: 35px;
+		text-align: center;
+		margin: 0px 5px;
+		border-radius: 50%;
+		font-size: 22px;
+		transition: all 0.3s ease-in;
+		color: #0250c5;
+		background: #fff;
+		box-shadow: $bs2;
+		transition: $transition;
+	  }
+	  .owl-controls .owl-nav .owl-prev{
+		  position: absolute;
+		  left: -20px;
+	  }
+	  .owl-controls .owl-nav .owl-next{
+		  position: absolute;
+		  right: -20px;
+	  }
+	  .owl-controls .owl-nav div:hover {
+		color: #fff!important;
+		background: #0250c5;
+	  }
+}
+/*-------------------------------
+  Pricing Plan  Area CSS End
+--------------------------------*/
+
+/*-------------------------------
+  Offer  Area CSS Start
+--------------------------------*/
+.offer-section{
+	padding: 120px 0px 120px;
+	.offer-list{
+		
+		margin-top: 26px;
+		li{
+			margin-bottom: 15px;
+			&:last-child{
+				margin-bottom: 0px;
+			}
+			.content{
+				box-shadow: $bs1;
+				padding: 10px 30px 10px 55px;
+				border-radius:  0px;
+				font-weight: 400;
+				transition: $transition;
+				cursor: pointer;
+				position: relative;
+				margin-bottom: 0px;
+				transition: $transition;
+				p{
+					margin-bottom: 0px!important;
+				}
+				&::before{
+					position: absolute;
+					content: '\f0a4';
+					font-family: 'Font Awesome 5 Free';
+					left: 30px;
+					font-weight: 400;
+					color: $base-color;
+					transition: $transition;
+				}
+				&::after{
+					position: absolute;
+					content: '';
+					left: 0px;
+					height: 100%;
+					width: 4px;
+					background: $base-color;
+					top: 0px;
+					transition: $transition;
+					z-index: -1;
+				}
+				&:hover{
+					color: #fff!important;
+					p{
+						color: #fff!important;
+					}
+					&::before{
+						color: #fff;
+					}
+					&::after{
+						width: 100%;
+					}
+				}
+			}
+
+		}
+	}
+}
+
+/*-------------------------------
+  Offer  Area CSS End
+--------------------------------*/
+
+
+
+/*-------------------------------
+Service Area Start
+--------------------------------*/
+.service-area{
+	padding: 120px 0px 90px;
+	.section-heading{
+		margin-bottom: 56px;
+	}
+}
+
+.single-service{
+	display: block;
+	text-align: center;
+	margin-bottom: 30px;
+	padding: 30px 30px 30px;
+	transition: $transition;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: $bs1;
+	.left-area{
+		margin-bottom: 25px;
+	}
+	.right-area{
+		.title{
+			font-size: 20px;
+			line-height: 30px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+		.text{
+			margin-bottom: 0px;
+		}
+	}
+	&:hover{
+		box-shadow: $bs2;
+		transform: translateY(-5px);
+	}
+}
+
+/*-------------------------------
+Service Area End
+--------------------------------*/
+
+
+
+/*-------------------------------
+Counter Area Start
+--------------------------------*/
+.counter-section{
+	padding: 150px 0px 150px;
+	background-repeat: no-repeat!important;
+	background-size: cover!important;
+	background-position: center!important;
+	background-attachment: fixed;
+	background-color: rgb(249, 245, 255);
+	position: relative;
+	.overlay{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+		background: rgba(0, 0, 0, 0.7);
+	}
+	.single-counter{
+		display: block;
+		text-align: center;
+		background: rgb(255, 255, 255);
+		padding: 40px 20px 35px;
+		border-radius: 10px;
+		box-shadow: $bs1;
+		transition: $transition;
+		cursor: pointer;
+		.icon{
+			img{
+				height: 60px;
+				margin-bottom: 25px;
+			}
+		}
+		.content{
+			h4{
+				font-size: 40px;
+				line-height: 50px;
+				font-weight: 700;
+			}
+			p{
+				font-size: 18px;
+				line-height: 28px;
+				font-weight: 600;
+			}
+		}
+		&:hover{
+			transform: translateY(-10px);
+			box-shadow: $bs2;
+		}
+	}
+}
+
+/*-------------------------------
+Counter Area End
+--------------------------------*/
+
+
+  
+/*---------------------------
+** Login Signup  Area Start
+---------------------------*/
+.auth{
+    padding: 120px 0px 120px;
+    .sign-form{
+        box-shadow: $bs2;
+		padding: 33px 30px 40px;
+		border-radius: 10px;
+        .heading{
+            text-align: center;
+            margin-bottom: 35px;
+            .title{
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 34px;
+                margin-bottom: 10px;
+            }
+            .subtitle{
+                font-size: 16px;
+                line-height: 26px;
+                
+            }
+        }
+        .form-control{
+            margin-bottom: 15px;
+            height: 50px;
+            padding: 0px 20px;
+            font-size: 14px;
+        }
+        .custom-checkbox{
+            margin-top: 25px;
+            font-size: 14px;
+            line-height: 24px;
+            .custom-control-label{
+                a{
+                    color: $base-color;
+                }
+            }
+        }
+        .mybtn1{
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            padding: 0px;
+            border-radius: 4px;
+            margin-top: 0px;
+			margin-bottom: 25px;
+			font-size: 18px;
+			font-weight: 600;
+        }
+        .reg-text{
+			font-size: 16px;
+			line-height: 26px;
+            a{
+                font-weight: 600;
+                transition: $transition;
+                &:hover{
+                    color: $base-color;
+                }
+            }
+        }
+    }
+}

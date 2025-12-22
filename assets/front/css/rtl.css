@@ -1,0 +1,318 @@
+html {
+    direction: rtl;
+}
+
+.intro-carousel,
+.pricing-slider,
+.owl-carousel
+ {
+    direction: ltr;
+}
+
+.mainmenu-area .top-header .left-content,
+.offer-section .offer-list,
+.mainmenu-area .top-header .right-content ul li.language-change .language-menu {
+    text-align: right;
+}
+
+.mainmenu-area .top-header .right-content {
+    text-align: left;
+}
+
+.mainmenu-area .top-header .left-content ul li {
+    margin-right: 0px;
+    margin-left: 15px;
+}
+
+.mainmenu-area .top-header .right-content ul li:last-child {
+    margin-left: 0px;
+    margin-right: 12px;
+}
+
+.mainmenu-area .top-header .right-content ul li::after {
+    right: auto;
+    left: -12px;
+}
+
+.mainmenu-area .top-header .right-content ul li.language-change p i {
+    margin-right: auto;
+    margin-left: 4px;
+}
+
+.mainmenu-area .navbar #main_menu .navbar-nav {
+    margin-right: auto;
+    margin-left: 0px !important;
+}
+
+.hero-area .hero-area-slider .intro-carousel .intro-content .slider-content {
+    margin-left: auto;
+    text-align: right;
+}
+
+.mybtn1 i {
+    transform: rotate(-180deg);
+}
+
+.about-section .left-content {
+    text-align: right;
+}
+
+.about-section .left-content .list li p {
+    padding: 10px 55px 10px 30px;
+}
+
+.about-section .left-content .list li p::before {
+    left: auto;
+    right: 30px;
+}
+
+.about-section .left-content .list li p::before {
+    transform: rotate(180deg);
+}
+
+.offer-section .offer-list li p {
+    padding: 10px 55px 10px 30px;
+}
+
+.offer-section .offer-list li p::before {
+    left: auto;
+    right: 30px;
+    transform: rotate(180deg);
+}
+
+.offer-section .offer-list li p::after {
+    left: auto;
+    right: 0px;
+}
+
+.contact-banner .left-content {
+    text-align: right;
+}
+
+.contact-banner .contact-btn-area {
+    text-align: left;
+}
+
+.footer-widget {
+    text-align: right;
+}
+
+.address-widget .about-info li p {
+    padding-left: auto;
+    padding-right: 50px;
+}
+
+.address-widget .about-info li p i {
+    left: auto;
+    right: 0px;
+}
+
+.main-breadcrumb-area {
+    text-align: right;
+}
+
+.main-breadcrumb-area .pages li a {
+    margin-right: auto;
+    margin-left: 30px;
+}
+
+.main-breadcrumb-area .pages li a::after {
+    transform: rotate(180deg);
+    right: auto;
+    left: -23px;
+}
+
+.branch-page .single-branch .content {
+    direction: ltr;
+}
+
+.faq .accordion .panel-title,
+.contact-us .right-area .contact-info,
+.contact-us .right-area .social-links,
+.user-dashboard-area .user-menu ul li a,
+.dashboard-inner,
+.user-dashboard-area .card .card-header,
+.user-dashboard-area table tr th,
+.packag-page,
+.faq .accordion .panel .panel-body,
+.service-area.service-page .content,
+.service-area.service-page .category-widget .category-list li,
+.blog-page.blog-details .blog-details .content,
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item,
+.about-section .section-heading,
+.about-section .list li p,
+.single-review,
+.single-blog .content,
+.product-details-section .right-area .product-info,
+.product-details-section .right-area .product-info .share-product,
+.product-details-section .product-desc,
+.cart-area .cart-summery .title,
+.table-bordered td, .table-bordered th,
+.checkout-area .g-title,
+.patment-area .select-payment,
+.dynamicpage,
+.order-details
+
+{
+    text-align: right !important;
+}
+
+.faq .accordion .panel-title::before,
+.faq .accordion .panel-title::after {
+    right: auto;
+    left: 0px;
+}
+
+.contact-us .right-area .contact-info .left .icon {
+    margin-right: auto;
+    margin-left: 20px;
+}
+label{
+    display: block;
+    text-align: right;
+}
+input[type=password],
+input[type=email] {
+    direction: ltr;
+}
+
+.user-dashboard-area .user-menu ul li a {
+    padding-left: auto;
+    padding-right: 20px;
+}
+
+.user-dashboard-area .user-menu ul li a::after {
+    left: auto;
+    right: 0px;
+}
+
+.form-group label {
+    text-align: right !important;
+    display: block;
+}
+
+.user-dashboard-area .mybtn1 {
+    margin-left: auto;
+    display: block;
+}
+
+.payment-form-wrapper.active #paymentmainform .mybtn1 {
+    margin-left: auto;
+    display: block;
+}
+
+.mainmenu-area .top-header .right-content {
+    text-align: center;
+}
+
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item {
+    text-align: right;
+}
+
+.mainmenu-area .top-header .right-content ul {
+    text-align: left;
+}
+
+.service-area.service-page .category-widget .category-list li a {
+    padding-left: auto;
+    padding-right: 15px;
+}
+
+.service-area.service-page .category-widget .category-list li a i,
+.categori-widget .cat-list li a p i
+{
+    transform: rotate(180deg);
+}
+
+.search-widget form .input-field {
+    padding: 0px 20px 0px 70px;
+}
+
+.search-widget form .base-btn1 {
+    right: auto;
+    left: 0px;
+}
+
+.blog-page.blog-details .blog-details .content .top-meta li {
+    margin-right: auto;
+    margin-left: 20px;
+}
+
+.about-section .list li p {
+    padding: 10px 55px 10px 30px;
+}
+.about-section .list li p::before,
+.offer-section .offer-list li .content::before
+ {
+    -webkit-transform:  rotate3d(1, 50, 1, 530deg);
+    -moz-transform:  rotate3d(1, 50, 1, 530deg);
+    -o-transform:  rotate3d(1, 50, 1, 530deg);
+    transform:  rotate3d(1, 50, 1, 530deg);
+    left: auto;
+    right: 30px;
+}
+
+.offer-section .offer-list li .content {
+    padding: 10px 55px 10px 30px;
+}
+
+.offer-section .offer-list li .content::after {
+    left: auto;
+    right: 0px;
+}
+
+.single-review .reviewr{
+    direction: rtl;
+}
+.single-review .reviewr .img img {
+    margin-right: auto;
+    margin-left: 20px;
+}
+
+.single-blog .content .top-meta li {
+    margin-right: auto;
+    margin-left: 20px;
+}
+.service-area.service-page .category-widget .category-list li a i, .categori-widget .cat-list li a p i{
+    margin-left: 5px;
+}
+.shop-section .product-filter .product-search-form input {
+    padding: 0px 20px 0px 60px;
+}
+
+.shop-section .product-filter .product-search-form button {
+    right: auto;
+    left: 0px;
+}
+
+.product-details-section .right-area .product-info .cart-buttons .first {
+    margin-right: 0px;
+    margin-left: 20px;
+}
+
+.product-details-section .right-area .product-info .cart-buttons .first i,
+.shop-section .single-product .content .mybtn1 i
+{
+    transform: rotate(0deg);
+}
+
+.patment-area  .mybtn1{
+    margin-left: auto;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

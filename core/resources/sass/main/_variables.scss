@@ -1,0 +1,52 @@
+
+//== Template Main Color
+$base-color: #983ce9;
+$base-color2: #53bc1c;
+$white: #fff;
+$body-color: #555;
+$heading-color: #222;
+$star-color: #fc9715;
+
+
+
+//== social media colors
+$facebook: #0069f7;
+$twitter: #00c6f7;
+$dribbble: #f7007a;
+$google-plus: #d1062c;
+$linkedin: #007bb5;
+
+// custum font Size
+
+
+
+
+
+
+
+
+/*-----------------
+    @Typography
+-----------------*/
+
+$body-font: 'Poppins', sans-serif;
+$heading-font: 'Poppins', sans-serif;
+//== font sizes
+$base-font-size: 16px !default;
+$font-size-h1: 60px !default;
+$font-size-h2: 52px !default;
+$font-size-h3: 26px !default;
+$font-size-h4: 22px !default;
+//** Unit-less `line-height` for use in components like buttons.
+$line-height: 1.6 !default; // 24/15
+// border-radius
+$border-radius-5: 5px !default;
+$border-radius-25: 25px !default;
+$border-radius-3: 3px !default;
+$border-radius-circle: 50% !default;
+//  transition
+$transition: all .3s ease-in;
+$transition-long: all .5s ease-in;
+
+$bs1: rgba(36, 37, 38, 0.08) 4px 4px 15px 0px;
+$bs2: rgba(36, 37, 38, 0.15) 4px 4px 30px 0px;

@@ -1,0 +1,47 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Error logs
+error_log
+*.log
+
+# Environment files (contains sensitive data)
+core/.env
+core/.env.backup
+.env
+.env.backup
+
+# Dependencies
+core/vendor/
+core/node_modules/
+node_modules/
+
+# Laravel specific
+core/storage/*.key
+core/public/hot
+core/public/storage
+core/.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+
+# Laravel storage (runtime generated)
+core/storage/logs/
+core/storage/framework/cache/
+core/storage/framework/sessions/
+core/storage/framework/views/
+
+# User uploaded files (too large for repo)
+assets/user/
+assets/front/banner/
+assets/front/img/
+assets/front/invoices/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cache
+*.cache
