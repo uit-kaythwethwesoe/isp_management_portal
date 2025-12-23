@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:500,1',
+            // Rate limiting handled by api.limit middleware per route
             'bindings',
         ],
     ];
@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'setlang' => \App\Http\Middleware\SetLangMiddleware::class,
         'setlocale' => \App\Http\Middleware\SetLocale::class,
+        'api.limit' => \App\Http\Middleware\ApiRateLimiter::class,
     ];
 
     /**

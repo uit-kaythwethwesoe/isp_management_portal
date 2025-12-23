@@ -10,45 +10,81 @@
 |
 | Base URL: https://isp.mlbbshop.app/api/v1
 |
+| Rate Limits:
+| - Auth endpoints (login/register): 5 requests/minute
+| - Forgot password: 3 requests/5 minutes
+| - Read endpoints: 120 requests/minute
+| - Write endpoints: 30 requests/minute
+|
 */
 
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes (No Authentication Required)
+| Authentication Routes (Strict Rate Limiting)
 |--------------------------------------------------------------------------
 */
-Route::prefix('v1')->namespace('API\V1')->group(function () {
-    
-    // Authentication
+Route::prefix('v1')->namespace('API\V1')->middleware('api.limit:auth')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
-    
-    // Password Reset (Forgot Password)
     Route::post('forgot-password', 'AuthController@forgotPassword');
     Route::post('reset-password', 'AuthController@resetPassword');
-    
-    // Public data
-    Route::get('packages', 'PackageController@index');
-    Route::get('packages/{id}', 'PackageController@show');
-    Route::get('banners', 'SystemController@banners');
-    
-    // System
-    Route::get('maintenance-status', 'SystemController@maintenanceStatus');
-    Route::get('app-version', 'SystemController@appVersion');
-    Route::get('settings', 'SystemController@settings');
-    
 });
 
 /*
 |--------------------------------------------------------------------------
-| Protected Routes (Authentication Required)
+| Public Routes (Read - Higher Limit)
 |--------------------------------------------------------------------------
 */
-Route::prefix('v1')->namespace('API\V1')->middleware('auth.api')->group(function () {
+Route::prefix('v1')->namespace('API\V1')->middleware('api.limit:read')->group(function () {
+    Route::get('packages', 'PackageController@index');
+    Route::get('packages/{id}', 'PackageController@show');
+    Route::get('banners', 'SystemController@banners');
+    Route::get('maintenance-status', 'SystemController@maintenanceStatus');
+    Route::get('app-version', 'SystemController@appVersion');
+    Route::get('settings', 'SystemController@settings');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Protected Read Routes (Authentication + Read Rate Limit)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('v1')->namespace('API\V1')->middleware(['auth.api', 'api.limit:read'])->group(function () {
+    // Profile
+    Route::get('profile', 'AuthController@profile');
     
-    // ==================== Auth Management ====================
+    // Bind Users
+    Route::get('bind-users', 'BindUserController@index');
+    Route::get('bind-users/{id}', 'BindUserController@show');
+    
+    // Packages
+    Route::get('my-packages', 'PackageController@myPackages');
+    
+    // Payments
+    Route::get('payments', 'PaymentController@index');
+    Route::get('payments/methods', 'PaymentController@methods');
+    Route::get('payments/{id}', 'PaymentController@show');
+    Route::get('payments/{id}/status', 'PaymentController@status');
+    
+    // Notifications
+    Route::get('notifications', 'NotificationController@index');
+    Route::get('notifications/unread-count', 'NotificationController@unreadCount');
+    Route::get('notifications/{id}', 'NotificationController@show');
+    
+    // Fault Reports
+    Route::get('fault-reports', 'FaultReportController@index');
+    Route::get('fault-reports/{id}', 'FaultReportController@show');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Protected Write Routes (Authentication + Write Rate Limit)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('v1')->namespace('API\V1')->middleware(['auth.api', 'api.limit:write'])->group(function () {
+    // Auth Management
     Route::post('logout', 'AuthController@logout');
     Route::post('logout-all', 'AuthController@logoutAll');
     Route::post('refresh-token', 'AuthController@refreshToken');
@@ -56,39 +92,23 @@ Route::prefix('v1')->namespace('API\V1')->middleware('auth.api')->group(function
     Route::post('device-token', 'AuthController@updateDeviceToken');
     Route::delete('account', 'AuthController@deleteAccount');
     
-    // ==================== User Profile ====================
-    Route::get('profile', 'AuthController@profile');
+    // Profile
     Route::put('profile', 'ProfileController@update');
     Route::post('profile/image', 'ProfileController@uploadImage');
     
-    // ==================== Bind Users (Broadband Accounts) ====================
-    Route::get('bind-users', 'BindUserController@index');
-    Route::get('bind-users/{id}', 'BindUserController@show');
+    // Bind Users
     Route::post('bind-users', 'BindUserController@store');
     Route::delete('bind-users/{id}', 'BindUserController@destroy');
     
-    // ==================== Packages ====================
-    Route::get('my-packages', 'PackageController@myPackages');
-    
-    // ==================== Payments ====================
-    Route::get('payments', 'PaymentController@index');
-    Route::get('payments/methods', 'PaymentController@methods');
-    Route::get('payments/{id}', 'PaymentController@show');
+    // Payments
     Route::post('payments/initiate', 'PaymentController@initiate');
-    Route::get('payments/{id}/status', 'PaymentController@status');
     
-    // ==================== Notifications ====================
-    Route::get('notifications', 'NotificationController@index');
-    Route::get('notifications/unread-count', 'NotificationController@unreadCount');
-    Route::get('notifications/{id}', 'NotificationController@show');
+    // Notifications
     Route::put('notifications/{id}/read', 'NotificationController@markAsRead');
     Route::put('notifications/read-all', 'NotificationController@markAllAsRead');
     
-    // ==================== Fault Reports ====================
-    Route::get('fault-reports', 'FaultReportController@index');
-    Route::get('fault-reports/{id}', 'FaultReportController@show');
+    // Fault Reports
     Route::post('fault-reports', 'FaultReportController@store');
     Route::put('fault-reports/{id}', 'FaultReportController@update');
     Route::delete('fault-reports/{id}', 'FaultReportController@destroy');
-    
 });
