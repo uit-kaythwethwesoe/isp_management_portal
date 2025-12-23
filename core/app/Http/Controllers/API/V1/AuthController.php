@@ -307,4 +307,213 @@ class AuthController extends Controller
             return $this->serverErrorResponse('Failed to fetch banners.');
         }
     }
+
+    /**
+     * Request password reset (Forgot Password).
+     * Sends OTP to phone number.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|min:7|max:15',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationErrorResponse($validator->errors()->toArray());
+        }
+
+        try {
+            $user = User::where('phone', $request->phone)->first();
+
+            if (!$user) {
+                // Don't reveal if phone exists or not for security
+                return $this->successResponse([
+                    'otp_sent' => true,
+                    'expires_in' => 300, // 5 minutes
+                ], 'If this phone number is registered, you will receive an OTP.');
+            }
+
+            // Generate 6-digit OTP
+            $otp = rand(100000, 999999);
+            
+            // Store OTP in cache/database (expires in 5 minutes)
+            \Illuminate\Support\Facades\Cache::put(
+                'password_reset_otp_' . $request->phone,
+                [
+                    'otp' => $otp,
+                    'user_id' => $user->id,
+                    'attempts' => 0,
+                ],
+                now()->addMinutes(5)
+            );
+
+            // TODO: Send OTP via SMS gateway
+            // For now, log it (remove in production)
+            Log::info("Password reset OTP for {$request->phone}: {$otp}");
+
+            return $this->successResponse([
+                'otp_sent' => true,
+                'expires_in' => 300,
+                // Remove this in production - only for testing
+                'debug_otp' => app()->environment('local') ? $otp : null,
+            ], 'OTP sent to your phone number.');
+        } catch (\Exception $e) {
+            Log::error('Forgot password failed: ' . $e->getMessage());
+            return $this->serverErrorResponse('Failed to process request.');
+        }
+    }
+
+    /**
+     * Verify OTP and reset password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|min:7|max:15',
+            'otp' => 'required|digits:6',
+            'new_password' => 'required|string|min:6|max:50',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationErrorResponse($validator->errors()->toArray());
+        }
+
+        try {
+            $cacheKey = 'password_reset_otp_' . $request->phone;
+            $otpData = \Illuminate\Support\Facades\Cache::get($cacheKey);
+
+            if (!$otpData) {
+                return $this->errorResponse('OTP expired or invalid. Please request a new one.', 400);
+            }
+
+            // Check max attempts (3)
+            if ($otpData['attempts'] >= 3) {
+                \Illuminate\Support\Facades\Cache::forget($cacheKey);
+                return $this->errorResponse('Too many invalid attempts. Please request a new OTP.', 429);
+            }
+
+            // Verify OTP
+            if ($otpData['otp'] != $request->otp) {
+                $otpData['attempts']++;
+                \Illuminate\Support\Facades\Cache::put($cacheKey, $otpData, now()->addMinutes(5));
+                return $this->errorResponse('Invalid OTP. ' . (3 - $otpData['attempts']) . ' attempts remaining.', 400);
+            }
+
+            // Reset password
+            $user = User::find($otpData['user_id']);
+            if (!$user) {
+                return $this->errorResponse('User not found.', 404);
+            }
+
+            $user->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+
+            // Clear OTP
+            \Illuminate\Support\Facades\Cache::forget($cacheKey);
+
+            // Revoke all existing tokens
+            $user->revokeAllTokens();
+
+            return $this->successResponse(null, 'Password reset successfully. Please login with your new password.');
+        } catch (\Exception $e) {
+            Log::error('Reset password failed: ' . $e->getMessage());
+            return $this->serverErrorResponse('Failed to reset password.');
+        }
+    }
+
+    /**
+     * Update device token for push notifications.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateDeviceToken(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'device_token' => 'required|string|max:500',
+            'device_type' => 'required|in:android,ios',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationErrorResponse($validator->errors()->toArray());
+        }
+
+        try {
+            $user = $request->user();
+            
+            // Store device token (you may want a separate table for multiple devices)
+            DB::table('user_devices')->updateOrInsert(
+                [
+                    'user_id' => $user->id,
+                    'device_type' => $request->device_type,
+                ],
+                [
+                    'device_token' => $request->device_token,
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ]
+            );
+
+            return $this->successResponse(null, 'Device token updated successfully.');
+        } catch (\Exception $e) {
+            Log::error('Update device token failed: ' . $e->getMessage());
+            return $this->serverErrorResponse('Failed to update device token.');
+        }
+    }
+
+    /**
+     * Delete user account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteAccount(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+            'reason' => 'nullable|string|max:500',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationErrorResponse($validator->errors()->toArray());
+        }
+
+        try {
+            $user = $request->user();
+
+            // Verify password
+            if (!Hash::check($request->password, $user->password)) {
+                return $this->errorResponse('Invalid password.', 400);
+            }
+
+            // Log deletion reason
+            Log::info("User account deletion requested", [
+                'user_id' => $user->id,
+                'phone' => $user->phone,
+                'reason' => $request->reason ?? 'No reason provided',
+            ]);
+
+            // Revoke all tokens
+            $user->revokeAllTokens();
+
+            // Soft delete - set status to disabled instead of hard delete
+            $user->update([
+                'user_status' => 1, // 1 = Disabled
+                'phone' => $user->phone . '_deleted_' . time(), // Prevent phone reuse issues
+            ]);
+
+            return $this->successResponse(null, 'Account deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error('Delete account failed: ' . $e->getMessage());
+            return $this->serverErrorResponse('Failed to delete account.');
+        }
+    }
 }

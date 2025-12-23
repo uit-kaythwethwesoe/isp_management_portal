@@ -25,6 +25,10 @@ Route::prefix('v1')->namespace('API\V1')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
     
+    // Password Reset (Forgot Password)
+    Route::post('forgot-password', 'AuthController@forgotPassword');
+    Route::post('reset-password', 'AuthController@resetPassword');
+    
     // Public data
     Route::get('packages', 'PackageController@index');
     Route::get('packages/{id}', 'PackageController@show');
@@ -49,6 +53,8 @@ Route::prefix('v1')->namespace('API\V1')->middleware('auth.api')->group(function
     Route::post('logout-all', 'AuthController@logoutAll');
     Route::post('refresh-token', 'AuthController@refreshToken');
     Route::post('change-password', 'AuthController@changePassword');
+    Route::post('device-token', 'AuthController@updateDeviceToken');
+    Route::delete('account', 'AuthController@deleteAccount');
     
     // ==================== User Profile ====================
     Route::get('profile', 'AuthController@profile');
